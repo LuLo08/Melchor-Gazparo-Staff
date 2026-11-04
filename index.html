@@ -39,6 +39,7 @@
       flex-direction: column;
     }
 
+    /* PANTALLA LOGIN */
     .login-container {
       width: 100vw;
       min-height: 100vh;
@@ -90,7 +91,7 @@
       margin-bottom: 6px;
     }
 
-    .form-group input {
+    .form-group input, .form-group select {
       width: 100%;
       height: 48px;
       padding: 10px 14px;
@@ -101,7 +102,7 @@
       transition: all 0.2s;
     }
 
-    .form-group input:focus {
+    .form-group input:focus, .form-group select:focus {
       outline: none;
       border-color: var(--primary-orange);
       background: #ffffff;
@@ -153,6 +154,7 @@
       background: #e2e8f0;
     }
 
+    /* APLICACIÓN */
     .app-layout {
       display: none;
       width: 100vw;
@@ -457,6 +459,7 @@
     }
     .badge.pendiente { background: var(--yellow-bg); color: var(--yellow-badge); }
     .badge.aceptada { background: var(--green-bg); color: var(--green-badge); }
+    .badge.rechazada { background: var(--red-bg); color: var(--red-badge); }
     .badge.publicada { background: #e8f8f0; color: #27ae60; }
     .badge.borrador { background: #edf2f7; color: #64748b; }
     .badge.activa { background: #e6fcf5; color: #0ca678; }
@@ -694,12 +697,38 @@
       margin-left: 4px;
     }
 
+    /* VISTA SOLICITUDES Y BOTÓN NUEVA */
+    .solicitudes-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      gap: 10px;
+    }
+
+    .btn-nueva-solicitud {
+      background: var(--primary-orange);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-nueva-solicitud:hover {
+      background: var(--primary-orange-hover);
+    }
+
     .solicitud-card {
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -719,7 +748,8 @@
 
     .btn-aceptar {
       flex: 1;
-      height: 42px;
+      height: 40px;
+      padding: 0 14px;
       background: #27ae60;
       color: white;
       border: none;
@@ -731,7 +761,8 @@
 
     .btn-rechazar {
       flex: 1;
-      height: 42px;
+      height: 40px;
+      padding: 0 14px;
       background: #e74c3c;
       color: white;
       border: none;
@@ -766,6 +797,47 @@
       line-height: 1.4;
     }
 
+    /* MODAL DE NUEVA SOLICITUD */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.55);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #94a3b8;
+    }
+
     .toast {
       position: fixed;
       bottom: 74px;
@@ -780,7 +852,7 @@
       font-size: 13px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.2);
       display: none;
-      z-index: 2000;
+      z-index: 4000;
       border-left: 4px solid var(--primary-orange);
       text-align: center;
     }
@@ -820,6 +892,7 @@
 </head>
 <body>
 
+  <!-- PANTALLA LOGIN -->
   <div class="login-container" id="loginScreen">
     <div class="login-card">
       <div class="login-icon">🏗️</div>
@@ -851,8 +924,10 @@
     </div>
   </div>
 
+  <!-- APLICACIÓN PRINCIPAL -->
   <div class="app-layout" id="appLayout">
     
+    <!-- BARRA LATERAL (Escritorio) -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <span>🏗️</span>
@@ -893,6 +968,7 @@
       </div>
     </aside>
 
+    <!-- VIEWPORT CENTRAL -->
     <main class="main-viewport">
       <header class="top-bar">
         <div class="view-title" id="pageTitleText">
@@ -906,6 +982,7 @@
 
       <div class="content-area">
 
+        <!-- 1. VISTA PANEL -->
         <section id="view-panel">
           <div id="bannerEncargado" class="banner-alerta-encargado" style="display:none;">
             <strong>Perfil Encargado:</strong> Asignado a <strong>Residencial Norte</strong>. Registra las existencias en campo para validación del Jefe de Obra.
@@ -955,6 +1032,7 @@
           </div>
         </section>
 
+        <!-- 2. VISTA MATERIALES (SOLO JEFE) -->
         <section id="view-materiales" style="display:none;">
           <div class="filter-bar">
             <input type="text" class="search-input" id="searchMaterial" placeholder="🔍 Buscar material..." oninput="renderMateriales()">
@@ -968,10 +1046,12 @@
           <div id="materialesList"></div>
         </section>
 
+        <!-- 3. VISTA OBRAS (SOLO JEFE) -->
         <section id="view-obras" style="display:none;">
           <div id="obrasListCards"></div>
         </section>
 
+        <!-- 4. VISTA DETALLE Y RECUENTO -->
         <section id="view-detalle-obra" style="display:none;">
           <button class="btn-back" id="btnVolverAObras" onclick="volverAObras()">← Volver al listado</button>
           
@@ -1028,15 +1108,57 @@
           </div>
         </section>
 
+        <!-- 5. VISTA SOLICITUDES (CON CREACIÓN) -->
         <section id="view-solicitudes" style="display:none;">
-          <h3 style="font-size: 15px; margin-bottom: 14px;">Solicitudes de Traspaso de Material</h3>
+          <div class="solicitudes-header-row">
+            <h3 style="font-size: 16px;">Solicitudes de Traspaso de Material</h3>
+            <button class="btn-nueva-solicitud" onclick="abrirModalNuevaSolicitud()">
+              <span>+</span> Nueva Solicitud
+            </button>
+          </div>
           <div id="solicitudesList"></div>
         </section>
 
       </div>
     </main>
 
+    <!-- BARRA INFERIOR MÓVIL (Bottom Navigation) -->
     <nav class="mobile-bottom-nav" id="mobileBottomNav"></nav>
+  </div>
+
+  <!-- MODAL PARA CREAR NUEVA SOLICITUD -->
+  <div class="modal-overlay" id="modalNuevaSolicitud">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span>📋 Crear Solicitud de Traspaso</span>
+        <button class="modal-close-btn" onclick="cerrarModalNuevaSolicitud()">✕</button>
+      </div>
+      <form onsubmit="crearNuevaSolicitud(event)">
+        <div class="form-group">
+          <label>1. Obra Origen (con excedentes disponibles)</label>
+          <select id="solObraOrigen" required onchange="actualizarMaterialesDisponibles()"></select>
+        </div>
+
+        <div class="form-group">
+          <label>2. Material solicitado</label>
+          <select id="solMaterial" required></select>
+        </div>
+
+        <div class="form-group">
+          <label>3. Cantidad requerida</label>
+          <input type="number" id="solCantidad" required min="1" placeholder="Ej: 10">
+        </div>
+
+        <div class="form-group">
+          <label>4. Obra Destino (la obra que lo necesita)</label>
+          <input type="text" id="solObraDestino" required value="Centro Comercial Diagonal" placeholder="Nombre de tu obra">
+        </div>
+
+        <button type="submit" class="btn-login" style="margin-top:12px;">
+          Enviar Solicitud
+        </button>
+      </form>
+    </div>
   </div>
 
   <div class="toast" id="toastMsg"></div>
@@ -1097,13 +1219,13 @@
       ]
     };
 
-    let DB = JSON.parse(localStorage.getItem('melchor_gasparo_v3_db')) || DB_DEFAULT;
+    let DB = JSON.parse(localStorage.getItem('melchor_gasparo_v4_db')) || DB_DEFAULT;
     let selectedObraId = null;
     let currentFilter = 'todos';
     let currentActiveView = 'panel';
 
     function saveDB() {
-      localStorage.setItem('melchor_gasparo_v3_db', JSON.stringify(DB));
+      localStorage.setItem('melchor_gasparo_v4_db', JSON.stringify(DB));
     }
 
     function showToast(msg) {
@@ -1573,30 +1695,37 @@
       showToast('Registro eliminado');
     }
 
+    /* GESTIÓN Y CREACIÓN DE SOLICITUDES */
     function renderSolicitudes() {
       const container = document.getElementById('solicitudesList');
       container.innerHTML = '';
 
       if (DB.currentUser.role !== 'jefe') return;
 
+      if (DB.solicitudes.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#888; padding:30px;">No hay solicitudes registradas.</p>';
+        return;
+      }
+
       DB.solicitudes.forEach(s => {
         const mat = DB.catalogo.find(m => m.id === s.materialId);
+        const obraOrigen = DB.obras.find(o => o.id === s.origenObraId);
         const card = document.createElement('div');
         card.className = 'solicitud-card';
         card.innerHTML = `
           <div>
-            <div style="font-weight:700; font-size:14px; margin-bottom:2px;">
+            <div style="font-weight:700; font-size:15px; margin-bottom:4px;">
               ${mat ? mat.nombre : 'Material'} × ${s.cantidad} ${mat ? mat.unidad : ''}
             </div>
-            <div style="font-size:12px; color:#64748b;">
-              Destino: <strong>${s.destinoNombre}</strong>
+            <div style="font-size:12px; color:#64748b; line-height:1.4;">
+              De: <strong>${obraOrigen ? obraOrigen.nombre : 'Obra'}</strong> ➔ Para: <strong>${s.destinoNombre}</strong>
             </div>
           </div>
           <div>
             ${s.estado === 'PENDIENTE' ? `
               <div class="btn-action-group">
-                <button class="btn-aceptar" onclick="responderSolicitud(${s.id}, 'ACEPTADA')">Aceptar</button>
-                <button class="btn-rechazar" onclick="responderSolicitud(${s.id}, 'RECHAZADA')">Rechazar</button>
+                <button class="btn-aceptar" onclick="responderSolicitud(${s.id}, 'ACEPTADA')">✓ Aceptar</button>
+                <button class="btn-rechazar" onclick="responderSolicitud(${s.id}, 'RECHAZADA')">✕ Rechazar</button>
               </div>
             ` : `
               <span class="badge ${s.estado.toLowerCase()}">${s.estado}</span>
@@ -1605,6 +1734,77 @@
         `;
         container.appendChild(card);
       });
+    }
+
+    function abrirModalNuevaSolicitud() {
+      const modal = document.getElementById('modalNuevaSolicitud');
+      const selectObraOrigen = document.getElementById('solObraOrigen');
+      
+      selectObraOrigen.innerHTML = '<option value="">-- Selecciona obra origen con excedente --</option>';
+      const obrasConExc = DB.obras.filter(o => DB.excedencias.some(e => e.obraId === o.id && e.estado === 'PUBLICADA'));
+      
+      obrasConExc.forEach(o => {
+        selectObraOrigen.innerHTML += `<option value="${o.id}">${o.nombre}</option>`;
+      });
+
+      actualizarMaterialesDisponibles();
+      modal.style.display = 'flex';
+    }
+
+    function cerrarModalNuevaSolicitud() {
+      document.getElementById('modalNuevaSolicitud').style.display = 'none';
+    }
+
+    function actualizarMaterialesDisponibles() {
+      const obraId = parseInt(document.getElementById('solObraOrigen').value);
+      const selectMat = document.getElementById('solMaterial');
+      selectMat.innerHTML = '<option value="">-- Selecciona material disponible --</option>';
+
+      if (!obraId) return;
+
+      const excs = DB.excedencias.filter(e => e.obraId === obraId && e.estado === 'PUBLICADA');
+      excs.forEach(e => {
+        const mat = DB.catalogo.find(m => m.id === e.materialId);
+        if (mat) {
+          selectMat.innerHTML += `<option value="${mat.id}" data-max="${e.cantidad}">${mat.nombre} (Disp: ${e.cantidad} ${mat.unidad})</option>`;
+        }
+      });
+    }
+
+    function crearNuevaSolicitud(e) {
+      e.preventDefault();
+      const obraOrigenId = parseInt(document.getElementById('solObraOrigen').value);
+      const matId = document.getElementById('solMaterial').value;
+      const cant = parseInt(document.getElementById('solCantidad').value);
+      const destinoNom = document.getElementById('solObraDestino').value.trim();
+
+      if (!obraOrigenId || !matId || !cant || !destinoNom) {
+        alert('Por favor completa todos los campos.');
+        return;
+      }
+
+      const matOpt = document.querySelector('#solMaterial option:checked');
+      const maxDisp = parseInt(matOpt.getAttribute('data-max') || '9999');
+
+      if (cant > maxDisp) {
+        alert('La cantidad solicitada supera los excedentes disponibles (' + maxDisp + ').');
+        return;
+      }
+
+      DB.solicitudes.unshift({
+        id: Date.now(),
+        origenObraId: obraOrigenId,
+        destinoNombre: destinoNom,
+        materialId: matId,
+        cantidad: cant,
+        estado: 'PENDIENTE'
+      });
+
+      saveDB();
+      cerrarModalNuevaSolicitud();
+      renderSolicitudes();
+      renderPanel();
+      showToast('Solicitud creada y enviada');
     }
 
     function responderSolicitud(solId, nuevoEstado) {
