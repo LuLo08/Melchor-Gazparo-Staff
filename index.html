@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Melchor Gasparó - Sistema de Gestión de Excedencias</title>
+  <title>Melchor Mascaró - Sistema de Gestión de Excedencias</title>
   <style>
     :root {
       --primary-orange: #e67e22;
@@ -58,11 +58,6 @@
       max-width: 380px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.3);
       text-align: center;
-    }
-
-    .login-icon {
-      font-size: 46px;
-      margin-bottom: 10px;
     }
 
     .login-title {
@@ -173,13 +168,13 @@
     }
 
     .sidebar-header {
-      padding: 20px;
+      padding: 14px 18px;
+      background: #ffffff;
+      border-bottom: 2px solid #e2e8f0;
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 18px;
-      font-weight: 700;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      justify-content: center;
+      border-radius: 4px 4px 0 0;
     }
 
     .nav-list {
@@ -895,14 +890,14 @@
   <!-- PANTALLA LOGIN -->
   <div class="login-container" id="loginScreen">
     <div class="login-card">
-      <div class="login-icon">🏗️</div>
-      <h1 class="login-title">Melchor Gasparó</h1>
+      <img src="logo.png" alt="Melchor Mascaró" style="max-width: 150px; height: auto; margin-bottom: 8px; display: inline-block;">
+      <h1 class="login-title">Melchor Mascaró</h1>
       <p class="login-subtitle">Sistema de Gestión de Excedencias</p>
 
       <form id="loginForm" onsubmit="handleLogin(event)">
         <div class="form-group">
           <label>Correo electrónico</label>
-          <input type="email" id="loginEmail" required value="jefe@melchorgasparo.com" autocomplete="username">
+          <input type="email" id="loginEmail" required value="jefe@melchormascaro.com" autocomplete="username">
         </div>
         <div class="form-group">
           <label>Contraseña</label>
@@ -912,11 +907,11 @@
       </form>
 
       <div class="login-preset-btns">
-        <button type="button" class="btn-demo-preset" onclick="fillCreds('jefe@melchorgasparo.com', '123456')">
+        <button type="button" class="btn-demo-preset" onclick="fillCreds('jefe@melchormascaro.com', '123456')">
           <span>👔 Jefe de Obra</span>
           <small style="color:#d35400;">Control total</small>
         </button>
-        <button type="button" class="btn-demo-preset" onclick="fillCreds('encargado@melchorgasparo.com', '123456')">
+        <button type="button" class="btn-demo-preset" onclick="fillCreds('encargado@melchormascaro.com', '123456')">
           <span>👷 Encargado</span>
           <small style="color:#d35400;">Solo recuento</small>
         </button>
@@ -930,8 +925,7 @@
     <!-- BARRA LATERAL (Escritorio) -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <span>🏗️</span>
-        <span>MG Excedencias</span>
+        <img src="logo.png" alt="Melchor Mascaró" style="max-width: 125px; height: auto;">
       </div>
 
       <ul class="nav-list">
@@ -1167,14 +1161,14 @@
     const DB_DEFAULT = {
       currentUser: null,
       users: {
-        'jefe@melchorgasparo.com': { 
+        'jefe@melchormascaro.com': { 
           pass: '123456', 
           name: 'Carlos Melchor', 
           role: 'jefe', 
           initials: 'CM',
           obraAsignadaId: null 
         },
-        'encargado@melchorgasparo.com': { 
+        'encargado@melchormascaro.com': { 
           pass: '123456', 
           name: 'Joan (Encargado)', 
           role: 'encargado', 
@@ -1219,13 +1213,13 @@
       ]
     };
 
-    let DB = JSON.parse(localStorage.getItem('melchor_gasparo_v4_db')) || DB_DEFAULT;
+    let DB = JSON.parse(localStorage.getItem('melchor_mascaro_v5_db')) || DB_DEFAULT;
     let selectedObraId = null;
     let currentFilter = 'todos';
     let currentActiveView = 'panel';
 
     function saveDB() {
-      localStorage.setItem('melchor_gasparo_v4_db', JSON.stringify(DB));
+      localStorage.setItem('melchor_mascaro_v5_db', JSON.stringify(DB));
     }
 
     function showToast(msg) {
@@ -1320,7 +1314,7 @@
             <span class="icon">📝</span>
             <span>Recuento</span>
           </button>
-          <button class="mobile-nav-btn" id="mNav-panel" onclick="switchView('panel')">
+          <button class="mobile-nav-panel" id="mNav-panel" onclick="switchView('panel')">
             <span class="icon">📊</span>
             <span>Mi Estado</span>
           </button>
