@@ -1,3 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Melchor Gasparó - Sistema de Gestión de Excedencias</title>
+  <style>
+    :root {
+      --primary-orange: #e67e22;
+      --primary-orange-hover: #d35400;
+      --sidebar-bg: #1e262c;
+      --sidebar-active: #2c3842;
+      --bg-gray: #f4f6f8;
+      --card-bg: #ffffff;
+      --text-dark: #2c3e50;
+      --text-muted: #7f8c8d;
+      --border-color: #e2e8f0;
+      --green-badge: #27ae60;
+      --green-bg: #e8f8f0;
+      --yellow-badge: #f39c12;
+      --yellow-bg: #fef5e7;
+      --red-badge: #e74c3c;
+      --red-bg: #fdeeed;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-gray);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-container {
       width: 100vw;
       min-height: 100vh;
       background: linear-gradient(135deg, #1b2838 0%, #2c3e50 50%, #d35400 100%);
@@ -54,7 +96,7 @@
       padding: 10px 14px;
       border-radius: 10px;
       border: 1px solid #cbd5e1;
-      font-size: 16px; /* Evita zoom automático en Safari iOS */
+      font-size: 16px;
       background: #f8fafc;
       transition: all 0.2s;
     }
@@ -111,7 +153,6 @@
       background: #e2e8f0;
     }
 
-    /* APLICACIÓN PRINCIPAL */
     .app-layout {
       display: none;
       width: 100vw;
@@ -119,7 +160,6 @@
       flex-direction: row;
     }
 
-    /* SIDEBAR (Escritorio) */
     .sidebar {
       width: 250px;
       background-color: var(--sidebar-bg);
@@ -232,7 +272,6 @@
       padding: 6px;
     }
 
-    /* VIEWPORT PRINCIPAL */
     .main-viewport {
       flex-grow: 1;
       display: flex;
@@ -291,7 +330,6 @@
       margin: 0 auto;
     }
 
-    /* BARRA DE NAVEGACIÓN INFERIOR PARA MÓVILES (Bottom Nav) */
     .mobile-bottom-nav {
       display: none;
       position: fixed;
@@ -344,7 +382,6 @@
       border-radius: 10px;
     }
 
-    /* TARJETAS ESTADÍSTICAS RESPONSIVAS */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -424,7 +461,6 @@
     .badge.borrador { background: #edf2f7; color: #64748b; }
     .badge.activa { background: #e6fcf5; color: #0ca678; }
 
-    /* FILTROS Y CATÁLOGO */
     .filter-bar {
       display: flex;
       flex-direction: column;
@@ -494,7 +530,6 @@
     .mat-excedente { font-size: 12px; font-weight: 600; color: #334155; text-align: right; flex-shrink: 0; }
     .mat-excedente span { color: var(--primary-orange); font-size: 13px; font-weight: 700; }
 
-    /* TARJETAS DE OBRAS */
     .obra-card {
       background: #ffffff;
       border: 1px solid var(--border-color);
@@ -527,7 +562,6 @@
     .metric-num { font-size: 16px; font-weight: 800; color: #d35400; }
     .metric-lbl { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
 
-    /* RECUENTO EN OBRA */
     .recuento-table-box {
       background: #ffffff;
       border: 1px solid var(--border-color);
@@ -613,7 +647,6 @@
     }
     .btn-guardar-excedencias:active { background: var(--primary-orange-hover); }
 
-    /* TABLA RESPONSIVA */
     .table-responsive-container {
       width: 100%;
       overflow-x: auto;
@@ -752,16 +785,15 @@
       text-align: center;
     }
 
-    /* REGLAS MÓVILES (< 768px) */
     @media (max-width: 768px) {
       .sidebar {
-        display: none; /* Se reemplaza por la barra inferior */
+        display: none;
       }
       .mobile-bottom-nav {
         display: flex;
       }
       .content-area {
-        padding: 14px 14px 85px 14px; /* Espacio para no solapar la barra de abajo */
+        padding: 14px 14px 85px 14px;
       }
       .top-bar {
         padding: 8px 14px;
@@ -788,7 +820,6 @@
 </head>
 <body>
 
-  <!-- PANTALLA LOGIN -->
   <div class="login-container" id="loginScreen">
     <div class="login-card">
       <div class="login-icon">🏗️</div>
@@ -820,10 +851,8 @@
     </div>
   </div>
 
-  <!-- APLICACIÓN PRINCIPAL -->
   <div class="app-layout" id="appLayout">
     
-    <!-- BARRA LATERAL (Escritorio) -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <span>🏗️</span>
@@ -864,7 +893,6 @@
       </div>
     </aside>
 
-    <!-- VIEWPORT CENTRAL -->
     <main class="main-viewport">
       <header class="top-bar">
         <div class="view-title" id="pageTitleText">
@@ -878,7 +906,6 @@
 
       <div class="content-area">
 
-        <!-- 1. VISTA PANEL -->
         <section id="view-panel">
           <div id="bannerEncargado" class="banner-alerta-encargado" style="display:none;">
             <strong>Perfil Encargado:</strong> Asignado a <strong>Residencial Norte</strong>. Registra las existencias en campo para validación del Jefe de Obra.
@@ -928,7 +955,6 @@
           </div>
         </section>
 
-        <!-- 2. VISTA MATERIALES (SOLO JEFE) -->
         <section id="view-materiales" style="display:none;">
           <div class="filter-bar">
             <input type="text" class="search-input" id="searchMaterial" placeholder="🔍 Buscar material..." oninput="renderMateriales()">
@@ -942,12 +968,10 @@
           <div id="materialesList"></div>
         </section>
 
-        <!-- 3. VISTA OBRAS (SOLO JEFE) -->
         <section id="view-obras" style="display:none;">
           <div id="obrasListCards"></div>
         </section>
 
-        <!-- 4. VISTA DETALLE Y RECUENTO -->
         <section id="view-detalle-obra" style="display:none;">
           <button class="btn-back" id="btnVolverAObras" onclick="volverAObras()">← Volver al listado</button>
           
@@ -975,7 +999,6 @@
             </div>
           </div>
 
-          <!-- Recuento Físico -->
           <div class="recuento-table-box">
             <h3 style="margin-bottom: 4px; font-size: 15px;">📝 Registro y Recuento en Tajo</h3>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
@@ -987,7 +1010,6 @@
             </button>
           </div>
 
-          <!-- Tabla de Estado con Scroll Horizontal Seguro -->
           <div class="panel-box">
             <div class="panel-box-header">📦 Materiales Registrados</div>
             <div class="table-responsive-container">
@@ -1006,7 +1028,6 @@
           </div>
         </section>
 
-        <!-- 5. VISTA SOLICITUDES (SOLO JEFE) -->
         <section id="view-solicitudes" style="display:none;">
           <h3 style="font-size: 15px; margin-bottom: 14px;">Solicitudes de Traspaso de Material</h3>
           <div id="solicitudesList"></div>
@@ -1015,7 +1036,6 @@
       </div>
     </main>
 
-    <!-- BARRA INFERIOR MÓVIL (Bottom Navigation) -->
     <nav class="mobile-bottom-nav" id="mobileBottomNav"></nav>
   </div>
 
@@ -1135,25 +1155,21 @@
       badgeH.innerText = isJefe ? 'Jefe de Obra' : 'Encargado';
       badgeH.className = 'role-indicator ' + (isJefe ? 'jefe' : 'encargado');
 
-      // Vistas Desktop Sidebar
       document.getElementById('navItemMateriales').style.display = isJefe ? 'flex' : 'none';
       document.getElementById('navItemObras').style.display = isJefe ? 'flex' : 'none';
       document.getElementById('navItemSolicitudes').style.display = isJefe ? 'flex' : 'none';
       document.getElementById('navItemMiObra').style.display = isJefe ? 'none' : 'flex';
 
-      // Filtros Dashboard
       document.getElementById('cardStatMat').style.display = isJefe ? 'flex' : 'none';
       document.getElementById('cardStatObras').style.display = isJefe ? 'flex' : 'none';
       document.getElementById('cardStatSolicitudes').style.display = isJefe ? 'flex' : 'none';
       document.getElementById('boxRecentSolicitudes').style.display = isJefe ? 'block' : 'none';
       document.getElementById('bannerEncargado').style.display = isJefe ? 'none' : 'block';
 
-      // Pantalla Detalle Obra
       document.getElementById('btnVolverAObras').style.display = isJefe ? 'inline-flex' : 'none';
       document.getElementById('colDetalleSol').style.display = isJefe ? 'block' : 'none';
       document.getElementById('thAccionesTabla').style.display = isJefe ? 'table-cell' : 'none';
 
-      // Bottom Nav para Móviles dinámico
       const mobileNav = document.getElementById('mobileBottomNav');
       if (isJefe) {
         const pendCount = DB.solicitudes.filter(s => s.estado === 'PENDIENTE').length;
@@ -1201,12 +1217,10 @@
 
       currentActiveView = viewName;
 
-      // Actualizar active en desktop sidebar
       document.querySelectorAll('.sidebar .nav-item').forEach(i => i.classList.remove('active'));
       const activeDesk = document.getElementById('navItem' + capitalize(viewName.replace('-', '')));
       if (activeDesk) activeDesk.classList.add('active');
 
-      // Actualizar active en mobile bottom nav
       document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
       const activeMob = document.getElementById('mNav-' + viewName);
       if (activeMob) activeMob.classList.add('active');
